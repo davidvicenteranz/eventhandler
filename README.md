@@ -4,6 +4,8 @@
 
 ### Build Status:
 
+[![Build Status](https://travis-ci.org/davidvicenteranz/eventhandler.svg?branch=master)](https://travis-ci.org/davidvicenteranz/eventhandler) 
+
 **PyPI:** [Package Information](https://pypi.python.org/pypi/eventhandler)
 
 
