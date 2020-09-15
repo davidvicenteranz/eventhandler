@@ -6,3 +6,5 @@ omit =
   */test/*
   # omit everything in /usr
   /tools/*
+  # omit travis stuff
+  /home/*
