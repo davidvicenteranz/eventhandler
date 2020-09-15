@@ -29,7 +29,7 @@ class TestEventHandler(TestCase):
         self.assertFalse(evntmgr.bind('on_event2', 'impossible text var'))
 
     def test_unbind_callback(self):
-        evntmgr = EventHandler('on_event1', 'on_event2', 'on_event3')
+        evntmgr = EventHandler('on_event1')
         callable = lambda : print(None)
         self.assertTrue(evntmgr.bind('on_event1', callable))
         self.assertEqual(len(evntmgr.events['on_event1']), 1)
@@ -38,7 +38,7 @@ class TestEventHandler(TestCase):
         self.assertFalse(evntmgr.unbind('on_event1', lambda: print('another function not in callback list')))
 
     def test_fire(self):
-        evntmgr = EventHandler('on_event1', 'on_event2', 'on_event3')
+        evntmgr = EventHandler('on_event1')
         def on_fired_callback(*args, extra=None):
             self.assertEqual(args[0], 1)
             self.assertEqual(args[1], 2)
