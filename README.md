@@ -18,10 +18,8 @@ $ pip install eventhandler
 
 ## Usage
 ```python
-# Imports the package
 from eventhandler import EventHandler
 
-# EventHandler class implementation 
 class ChatRoom:
     """Simulates a chatroom environment with event handler implementation."""
     messages = [] # Holds user messages
@@ -63,7 +61,7 @@ chat = ChatRoom()
 # This is a external callback to bind in the chatroom event habdler
 def saludate_new_user(user):
     """Bot saludates the user."""
-    chat.say('bot', f'Hello {user}, welcome to out chat.')
+    chat.say('bot', f'Hello {user}, welcome to the chat room.')
 
 # This is a external callback to bind in the chatroom event habdler
 def response_to_user(user, msg):
@@ -87,15 +85,15 @@ chat.say('david', 'Hello everybody!')
 chat.say('david', 'Hey bot, are there anyone here?')
 chat.say('sergio', 'Hi david!')
 ```
-**The avobe code must output this:**
+**The avobe code must produce and output this:**
 ```text
 sergio has joined the chat.
-bot says:	 Hello sergio, welcome to out chat.
+bot says:	 Hello sergio, welcome to the chat room.
 sergio says:	 Hello World!
 sergio says:	 Hey bot, are there anyone here?
 bot says:	 Nope sergio. Just you and me.
 david has joined the chat.
-bot says:	 Hello david, welcome to out chat.
+bot says:	 Hello david, welcome to the chat room.
 david says:	 Hello everybody!
 david says:	 Hey bot, are there anyone here?
 bot says:	 Yes david. there are 2 users in the room.

@@ -41,7 +41,7 @@ chat = ChatRoom()
 # This is a external callback to bind in the chatroom event habdler
 def saludate_new_user(user):
     """Bot saludates the user."""
-    chat.say('bot', f'Hello {user}, welcome to out chat.')
+    chat.say('bot', f'Hello {user}, welcome to the chat room.')
 
 # This is a external callback to bind in the chatroom event habdler
 def response_to_user(user, msg):

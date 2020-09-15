@@ -39,12 +39,12 @@ class TestEventHandler(TestCase):
 
     def test_fire(self):
         evntmgr = EventHandler('on_event1', 'on_event2', 'on_event3')
-        def on_fired_callback(*args, **kwargs):
+        def on_fired_callback(*args, extra=None):
             self.assertEqual(args[0], 1)
             self.assertEqual(args[1], 2)
             self.assertEqual(args[2], 3)
             self.assertEqual(args[3], 4)
-            self.assertEqual(kwargs['extra'], 5)
+            self.assertEqual(extra, 5)
 
         evntmgr.bind('on_event1', on_fired_callback)
 
