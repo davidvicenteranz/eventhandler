@@ -10,7 +10,7 @@ setup(
     author='David Vicente',
     author_email='dvicente74@gmail.com',
     description='eventhandler is a basic, but effective, event handler library for Python 3',
-    classifiers=(
+    classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Natural Language :: English',
@@ -18,5 +18,6 @@ setup(
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-    )
+        'Programming Language :: Python :: 3 :: 6'
+    ]
 )
