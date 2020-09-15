@@ -32,6 +32,9 @@ class TestEventHandler(TestCase):
         # Bind existing callback
         self.assertFalse(self.emgr.bind('on_event1', callable))
 
+        # Try to bind a not callable variable
+        self.assertFalse(self.emgr.bind('on_event2', 'impossible text var'))
+
     def test_unbind_callback(self):
         callable = lambda : print(None)
         self.assertTrue(self.emgr.bind('on_event1', callable))
