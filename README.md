@@ -1,5 +1,5 @@
 ## eventhandler
-#### A basic, but effective, event handler library for Python 3
+#### A basic, but effective, event handler library for Python
 
 
 ### Build Status:
