@@ -1,10 +1,10 @@
 [run]
 branch = True
-source = coveralls,eventhandler
+source = coveralls, eventhandler
 omit =
   # omit anything in a .local directory anywhere
-  */test/*
+  ./test/*
   # omit everything in /usr
-  /tools/*
+  ./tools/*
   # omit travis stuff
-  ./home/*
+  */home/*
