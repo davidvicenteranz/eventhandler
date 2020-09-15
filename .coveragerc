@@ -7,4 +7,4 @@ omit =
   # omit everything in /usr
   /tools/*
   # omit travis stuff
-  /home/*
+  ./home/*
