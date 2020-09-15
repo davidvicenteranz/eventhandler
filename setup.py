@@ -9,7 +9,7 @@ setup(
     license='MIT License',
     author='David Vicente',
     author_email='dvicente74@gmail.com',
-    description='eventhandler is a basic, but effective, event handler library for Python',
+    description='eventhandler is a basic, but effective, event handler library for Python 3',
     classifiers=(
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
