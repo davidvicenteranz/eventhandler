@@ -1,4 +1,8 @@
 [run]
 branch = True
 source = coveralls,eventhandler
-omit = tests/*
+omit =
+  # omit anything in a .local directory anywhere
+  */test/*
+  # omit everything in /usr
+  /tools/*
