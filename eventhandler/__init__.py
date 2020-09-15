@@ -1,7 +1,7 @@
 import sys
 import types
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 
 
 class EventHandler:
@@ -21,8 +21,9 @@ class EventHandler:
     events: dict = None
     allowed_callbacks = []
 
-    def __init__(self, *args):
+    def __init__(self, *args, verbose=False):
         """EventHandler initiazition recibe a list of allowed event names."""
+        self.verbose = verbose
         if not args:
             raise EventHandler.Exceptions.InitializationError(
                 'EventHandler must be initialized with a list of callbacks')
@@ -48,7 +49,8 @@ class EventHandler:
     def bind(self, event: str, callback: callable) -> bool:
         """Bind a callback to an event."""
         if not self.is_callable(callback):
-            print(f'Callback is not callable', file=sys.stdout)
+            print(f'Callback not registered. Type {type(callback)} '
+                  f'is not a callable function.', file=sys.stdout) if self.verbose else None
             return False
 
         if not event in self.allowed_callbacks:
@@ -62,7 +64,8 @@ class EventHandler:
             setattr(self.Callbacks, event.upper(), active_list)
             return True
 
-        print(f'Event {str(callback.__name__)} is already registered in {event.upper()} event.', file=sys.stdout)
+        print(f'Event {str(callback.__name__)} is already registered in '
+              f'{event.upper()} event.', file=sys.stdout) if self.verbose else None
         return False
 
     def fire(self, event: str, *args, **kwargs):
