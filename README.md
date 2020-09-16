@@ -1,5 +1,5 @@
 ## eventhandler
-#### A basic, but effective, event handler library for Python 3.6 or upper
+#### A simple but effective event handler, based in calbacks, written in pure python 3.
 
 
 ### Build Status:
@@ -10,13 +10,14 @@
 **PyPI:** [Package Information](https://pypi.python.org/pypi/eventhandler)
 
 
-## Installation
-Just run:
+## Quick start
+Install the package
 ```shell
 $ pip install eventhandler
 ```
 
-## Usage
+
+## Usage example
 ```python
 from eventhandler import EventHandler
 
