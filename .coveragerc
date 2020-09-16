@@ -1,2 +1,2 @@
 [run]
-source = coveralls, eventhandler
+source = eventhandler
