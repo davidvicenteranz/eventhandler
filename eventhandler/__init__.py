@@ -12,18 +12,18 @@ class EventHandler:
         class EventNotAllowedError(Exception):
             pass
 
-    def __init__(self, *event_names, verbose=False, file_to_verbose=sys.stdout, tolerate_callbacks_exceptions=False):
+    def __init__(self, *event_names, verbose=False, stream_output=sys.stdout, tolerate_callbacks_exceptions=False):
         """EventHandler initiazition recibes a list of allowed event names as arguments."""
         self.__events = {}
         self.verbose = verbose
         self.tolerate_exceptions = tolerate_callbacks_exceptions
-        self.print_file = file_to_verbose
+        self.stream_output = stream_output
 
         if event_names:
             for event in event_names:
                 self.register_event(str(event)) # cast as str to be safe
 
-        print(f'{self.__str__()} has been init.', file=self.print_file) if self.verbose else None
+        print(f'{self.__str__()} has been init.', file=self.stream_output) if self.verbose else None
 
     @property
     def events(self):
@@ -52,7 +52,7 @@ class EventHandler:
         """Register an event name."""
         # print('registering event', event_name, self.events)
         if self.is_event_registered(event_name):
-            print(f'Omiting event {event_name} registration, already implemented', file=self.print_file) if self.verbose else None
+            print(f'Omiting event {event_name} registration, already implemented', file=self.stream_output) if self.verbose else None
             return False
 
         self.__events[event_name] = []
@@ -64,7 +64,7 @@ class EventHandler:
             del self.__events[event_name]
             return True
         print(f'Omiting unregister_event. {event_name} '
-              f'is not implemented.', file=self.print_file) if self.verbose else None
+              f'is not implemented.', file=self.stream_output) if self.verbose else None
         return False
 
     @staticmethod
@@ -81,7 +81,7 @@ class EventHandler:
 
         if not self.is_callable(callback):
             print(f'Callback not registered. Type {type(callback)} '
-                  f'is not a callable function.', file=self.print_file) if self.verbose else None
+                  f'is not a callable function.', file=self.stream_output) if self.verbose else None
             return False
 
         if not self.is_event_registered(event_name):
@@ -94,7 +94,7 @@ class EventHandler:
             return True
 
         print(f'Can not bind callback {str(callback.__name__)}, already registered in '
-              f'{event_name} event.', file=self.print_file) if self.verbose else None
+              f'{event_name} event.', file=self.stream_output) if self.verbose else None
         return False
 
     def unbind(self, event_name: str, callback: callable) -> bool:
@@ -102,7 +102,7 @@ class EventHandler:
         if not self.is_event_registered(event_name):
             print(f'Can not unbind event {event_name}, not registered. Registered events '
                   f'are: {", ".join(self.__events.keys())}. '
-                  f'Please register event {event_name} before unbind callbacks.', file=self.print_file)
+                  f'Please register event {event_name} before unbind callbacks.', file=self.stream_output)
             return False
 
         if callback in self.__events[event_name]:
@@ -110,7 +110,7 @@ class EventHandler:
             return True
 
         print(f'Can not unbind callback {str(callback.__name__)}, is not registered in '
-              f'{event_name} event.', file=self.print_file) if self.verbose else None
+              f'{event_name} event.', file=self.stream_output) if self.verbose else None
 
         return False
 
@@ -125,9 +125,9 @@ class EventHandler:
                     raise e
                 else:
                     if self.verbose:
-                        print(f'WARNING: {str(callback.__name__)} produces an exception error.', file=self.print_file)
-                        print('Arguments', args, file=self.print_file)
-                        print(e, file=self.print_file)
+                        print(f'WARNING: {str(callback.__name__)} produces an exception error.', file=self.stream_output)
+                        print('Arguments', args, file=self.stream_output)
+                        print(e, file=self.stream_output)
                     all_ok = False
                     continue
 

@@ -15,7 +15,7 @@ class TestEventHandler(TestCase):
         self.assertEqual(eh.count_events, 0)        # checks there is no events
         self.assertFalse(eh.verbose)                # checks verbose is false
         self.assertFalse(eh.tolerate_exceptions)    # checks no exception toleration
-        self.assertEqual(eh.print_file.__class__.__name__, 'TextIOWrapper')
+        self.assertIsNotNone(eh.stream_output)
 
 
     def test_002_initiaization_with_events(self):
@@ -24,7 +24,7 @@ class TestEventHandler(TestCase):
         self.assertEqual(eh.count_events, 1)
         self.assertFalse(eh.verbose)  # checks verbose is false
         self.assertFalse(eh.tolerate_exceptions)  # checks no exception toleration
-        self.assertEqual(eh.print_file.__class__.__name__, 'TextIOWrapper')
+        self.assertIsNotNone(eh.stream_output)
 
 
     def test_003_initialization_verbose(self):
@@ -43,8 +43,8 @@ class TestEventHandler(TestCase):
 
     def test_005_initialization_file_to_verbose(self):
         with open('test.txt', '+w') as f:
-            eh = EventHandler(file_to_verbose=f, verbose=True)
-            self.assertEqual('test.txt', eh.print_file.name)
+            eh = EventHandler(stream_output=f, verbose=True)
+            self.assertEqual('test.txt', eh.stream_output.name)
 
             instance_id = str(hex(id(eh)))
             f.close()
@@ -93,7 +93,7 @@ class TestEventHandler(TestCase):
         self.assertFalse(eh.is_callback_in_event(event_name, callback1))
 
         output = io.StringIO()
-        eh = EventHandler(event_name, verbose=True, file_to_verbose=output)
+        eh = EventHandler(event_name, verbose=True, stream_output=output)
 
         with self.assertRaises(EventHandler.Exceptions.EventNotAllowedError) as context:
             # Impossible to bind to a not registered callback, will raie error
@@ -121,7 +121,7 @@ class TestEventHandler(TestCase):
 
         # Test already unregistered event
         output = io.StringIO()
-        eh = EventHandler(event_name, verbose=True, file_to_verbose=output)
+        eh = EventHandler(event_name, verbose=True, stream_output=output)
         self.assertFalse(eh.unbind(event_name, callback1))
 
         self.assertTrue(eh.bind(event_name, callback1))
@@ -168,7 +168,7 @@ class TestEventHandler(TestCase):
         eh.verbose = True
         eh.tolerate_exceptions = True
         output = io.StringIO()
-        eh.print_file = output
+        eh.stream_output = output
         self.assertFalse(eh.fire(event_name, 1, 2, 3, extra=0))
         value = output.getvalue()
         self.assertTrue('WARNING' in value)
