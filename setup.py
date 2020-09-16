@@ -4,7 +4,6 @@ from eventhandler import __version__, __author__
 setup(
     name='eventhandler',
     version=__version__,
-    setup_requires=['wheel'],
     packages=['eventhandler'],
     url='https://github.com/davidvicenteranz/eventhandler',
     license='MIT License',
