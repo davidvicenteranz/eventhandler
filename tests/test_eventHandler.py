@@ -109,6 +109,9 @@ class TestEventHandler(TestCase):
 
         self.assertTrue(eh.is_callback_in_event(event_name, callback1))
 
+        # tries to bind not callable event
+        self.assertFalse(eh.bind(event_name, 'not_callable'))
+
     def test_010_unbind_callbacks(self):
         event_name= 'newCoolEvent'
         eh = EventHandler(event_name)
