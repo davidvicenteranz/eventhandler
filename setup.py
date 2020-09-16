@@ -1,5 +1,5 @@
 from distutils.core import setup
-from eventhandler import __version__
+from eventhandler import __version__, __author__
 
 setup(
     name='eventhandler',
@@ -7,9 +7,9 @@ setup(
     packages=['eventhandler'],
     url='https://github.com/davidvicenteranz/eventhandler',
     license='MIT License',
-    author='David Vicente',
+    author=__author__,
     author_email='dvicente74@gmail.com',
-    description='eventhandler is a basic, but effective, event handler library for Python 3',
+    description='A simple but effective event handler, based in calbacks, written in pure python 3',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
