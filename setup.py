@@ -1,7 +1,7 @@
 from distutils.core import setup
 from eventhandler import __version__, __author__
 
-with open('PYPI_DESCRIPTION.rst') as f:
+with open('README.rst') as f:
     long_description = f.read()
 
 setup(
