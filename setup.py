@@ -1,7 +1,7 @@
 from distutils.core import setup
 from eventhandler import __version__, __author__
 
-with open('PYPI_DESCRIPTION.md') as f:
+with open('PYPI_DESCRIPTION.rst') as f:
     long_description = f.read()
 
 setup(
@@ -22,6 +22,5 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3'
     ],
-    long_description=long_description,
-    long_description_content_type='text/markdown',  # This is important!
+    long_description=long_description
 )
