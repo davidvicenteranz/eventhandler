@@ -1,7 +1,7 @@
 import sys
 import types
 
-__version__ = '1.0.17'
+__version__ = '1.0.18'
 
 
 class EventHandler:
