@@ -28,11 +28,12 @@ class EventHandler:
     @property
     def events(self):
         """Return events as readOnly."""
-        return tuple(self.__events,)
+        return self.__events
 
-    def clear(self):
+    def clear_events(self):
         """Clear all events."""
         self.__events = {}
+        return True
 
     @property
     def event_list(self) -> [str]:

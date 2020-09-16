@@ -84,7 +84,7 @@ class TestEventHandler(TestCase):
         self.assertTrue(EventHandler.is_callable(func))
         self.assertFalse(EventHandler.is_callable(not_func))
 
-    def test_008_bind_callbacks(self):
+    def test_009_bind_callbacks(self):
         event_name= 'newCoolEvent'
         eh = EventHandler(event_name)
         def callback1(*args):
@@ -109,7 +109,7 @@ class TestEventHandler(TestCase):
 
         self.assertTrue(eh.is_callback_in_event(event_name, callback1))
 
-    def test_009_unbind_callbacks(self):
+    def test_010_unbind_callbacks(self):
         event_name= 'newCoolEvent'
         eh = EventHandler(event_name)
 
@@ -141,7 +141,7 @@ class TestEventHandler(TestCase):
         for event in eh.event_list:
             self.assertTrue(event in value)
 
-    def test_010_fire_event(self):
+    def test_011_fire_event(self):
         event_name= 'newCoolEvent'
         eh = EventHandler(event_name)
 
@@ -174,7 +174,7 @@ class TestEventHandler(TestCase):
         self.assertTrue('WARNING' in value)
         self.assertTrue(will_fail_callback.__name__ in value)
 
-    def test_011_string_representation(self):
+    def test_012_string_representation(self):
         eh = EventHandler('one')
 
         def check__str__output():
@@ -222,6 +222,16 @@ class TestEventHandler(TestCase):
         self.assertTrue(eh.unregister_event('three'))
         check__str__output()
         self.assertTrue(eh.unbind('two', callback2_in_two))
+
+    def test_013_test_events_tuple(self):
+        eh = EventHandler('one', 'two', 'three')
+        self.assertDictEqual(eh.events, {'one':[], 'two':[], 'three':[]})
+
+    def test_014_test_events_tuple(self):
+        eh = EventHandler('one', 'two', 'three')
+        self.assertDictEqual(eh.events, {'one':[], 'two':[], 'three':[]})
+        self.assertTrue(eh.clear_events())
+        self.assertDictEqual(eh.events, {})
 
 
 
