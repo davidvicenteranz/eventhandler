@@ -1,6 +1,9 @@
 from distutils.core import setup
 from eventhandler import __version__, __author__
 
+with open('README.md') as f:
+    long_description = f.read()
+
 setup(
     name='eventhandler',
     version=__version__,
@@ -18,5 +21,7 @@ setup(
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3'
-    ]
+    ],
+    long_description=long_description,
+    long_description_content_type='text/markdown',  # This is important!
 )
