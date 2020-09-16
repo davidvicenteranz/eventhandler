@@ -2,3 +2,5 @@
 *.pyc
 .coverage
 /build
+Pipfile
+Pipfile.lock
