@@ -55,7 +55,7 @@ class ChatRoom:
 
 
 class ChatBot:
-    """A basic bot chat that's can operate in a chatroom."""
+    """Basic chatbot to link/subscribes to the chatroom class events and operate some interactions with users."""
 
     def __init__(self, chatroom: ChatRoom, name: str = 'bot'):
         self.chatroom = chatroom
@@ -65,18 +65,19 @@ class ChatBot:
         chatroom.event_handler.link(self.saludate_new_user, 'onNewuser')
         chatroom.event_handler.link(self.read_user_message, 'onMessage')
 
-    # When chatroom fires the onNewUser event our bot will saludate.
+    # When chatroom fires the onNewUser event our bot will saludate will link this method.
     def saludate_new_user(self, user):
         """Bot saludates the user."""
         chat.say('bot', f'Hello {user}, welcome to the chat room.')
 
-    # When chatroom fires the onNewMessage event process it and broadcast some output if needed.
+    # When chatroom fires the onNewMessage event process it and broadcast some output to the chatroom if possible.
     def read_user_message(self, user, msg):
         """Read user messages and act in consequece."""
         if user == 'bot':
+            # Please don't process yourself messages bot...
             return
 
-        # Intercept an answerable question
+        # check if the recibed message is answerable and reply if possible
         if msg == f'Hey {self.name}, are there anyone here?':
             if len(self.chatroom.user_list()) < 1:
                 self.chatroom.say(self.name, f'Nope {user}. Just you and me.')
@@ -94,7 +95,7 @@ if __name__ == '__main__':
     # Create the chatroom
     chat = ChatRoom()
 
-    # Now bot can control users and messages of the chat
+    # Initilize ChatBot class with the ChatRoom instance as param to let subscribe it to the chat events.
     bot = ChatBot(chat)
 
     # Now the chat simulation. The first user interaction will send a message onNewuser event will be fired and
