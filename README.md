@@ -36,12 +36,12 @@ class ChatRoom:
 
         # Define the event handler and make it public outside the class to let externals subscriptions to events.
         self.event_handler = EventHandler('onNewuser', 'onMessage')  # Note that events names are cased sensitive.
+        # You can set any number of unique events and asing any number of unique callbacks to fire per event.
+        # Is not necessary define events names during initialization, also you can register the event names during
+        # run time using register_event method.
 
         # Lets link some internal class methods to those events as callbacks.
-        # You can set any number of unique events and any number of unique callbacks to fire per event,
         # Limits are available resources.
-        self.event_handler.register_event('onNewUser')
-        self.event_handler.register_event('onMessage')
         self.event_handler.link(self.__on_newuser_join, 'onNewuser')
         self.event_handler.link(self.__on_message, 'onMessage')
 
