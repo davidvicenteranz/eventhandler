@@ -4,6 +4,8 @@
 name: Python package and publish
 
 on:
+  push:
+    branches: [master]
   release:
     types: [published]
 

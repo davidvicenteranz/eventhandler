@@ -229,3 +229,7 @@ class TestEventHandler(TestCase):
         self.assertDictEqual(eh.events, {'one': [], 'two': [], 'three': []})
         self.assertTrue(eh.clear_events())
         self.assertDictEqual(eh.events, {})
+
+    def test_015_test__rep(self):
+        eh = EventHandler('one', 'two', 'three')
+        self.assertEqual(eh.__str__(), eh.__repr__())
