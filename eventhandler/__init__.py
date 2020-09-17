@@ -1,7 +1,7 @@
 import sys
 import types
 
-__version__ = '1.1.24'
+__version__ = '1.1.25'
 __author__ = 'David Vicente Ranz'
 
 
