@@ -1,15 +1,31 @@
 eventhandler
 ============
 
+<<<<<<< HEAD
 A simple but, **effective event handler based in calbacks**, written in pure python 3.
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+=======
+Is a simple and effective event handler class, based in callbacks for python 3
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+eventhandler
+~~~~~~~~~~~~
+Is a **python simple and effective event handler class**, based in callbacks for python 3.
+
+>>>>>>> release/1.1.24
 
 Build Status:
 ~~~~~~~~~~~~~
 
+<<<<<<< HEAD
 | |Build Status| |Coverage Status|  |Python package and publish|
 
 **Github code and samples** https://pypi.python.org/pypi/eventhandler
+=======
+| |Build Status| |Coverage Status| |Pypi| |Python package and publish|
+
+**Github code and samples** https://github.com/davidvicenteranz/eventhandler
+>>>>>>> release/1.1.24
 
 Quick start
 -----------
@@ -24,6 +40,11 @@ Install the package
 Usage example
 ~~~~~~~~~~~~~
 
+<<<<<<< HEAD
+=======
+Lets see a simple example of a chat room controlled by a bot using event calls.
+
+>>>>>>> release/1.1.24
 .. code::
 
     from eventhandler import EventHandler
@@ -109,9 +130,20 @@ Usage example
     bot says:    Yes david. there are 2 users in the room.
     sergio says:     Hi david!
 
+<<<<<<< HEAD
+=======
+**Thanks for watching and enjoy it.**
+
+>>>>>>> release/1.1.24
 .. |Build Status| image:: https://travis-ci.org/davidvicenteranz/eventhandler.svg?branch=master
    :target: https://travis-ci.org/davidvicenteranz/eventhandler
 .. |Coverage Status| image:: https://coveralls.io/repos/github/davidvicenteranz/eventhandler/badge.svg
    :target: https://coveralls.io/github/davidvicenteranz/eventhandler
 .. |Python package and publish| image:: https://github.com/davidvicenteranz/eventhandler/workflows/Python%20package%20and%20publish/badge.svg?branch=master
+<<<<<<< HEAD
    :target: https://pypi.org/project/eventhandler/
+=======
+   :target: https://github.com/davidvicenteranz/eventhandler
+.. |Pypi| image:: https://badge.fury.io/py/eventhandler.svg
+    :target: https://badge.fury.io/py/eventhandler
+>>>>>>> release/1.1.24

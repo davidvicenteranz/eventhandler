@@ -4,11 +4,13 @@ import types
 __version__ = '1.0.23'
 __author__ = 'David Vicente Ranz'
 
+
 class EventHandler:
-    """Event manager, bind, unbind and fire events."""
+    """Event manager, link, unlink and fire events."""
 
     class Exceptions:
         """Custom error classes."""
+
         class EventNotAllowedError(Exception):
             pass
 
@@ -21,7 +23,7 @@ class EventHandler:
 
         if event_names:
             for event in event_names:
-                self.register_event(str(event)) # cast as str to be safe
+                self.register_event(str(event))  # cast as str to be safe
 
         print(f'{self.__str__()} has been init.', file=self.stream_output) if self.verbose else None
 
@@ -53,7 +55,8 @@ class EventHandler:
         """Register an event name."""
         # print('registering event', event_name, self.events)
         if self.is_event_registered(event_name):
-            print(f'Omiting event {event_name} registration, already implemented', file=self.stream_output) if self.verbose else None
+            print(f'Omiting event {event_name} registration, already implemented',
+                  file=self.stream_output) if self.verbose else None
             return False
 
         self.__events[event_name] = []
@@ -74,10 +77,10 @@ class EventHandler:
         return isinstance(func,
                           (types.FunctionType, types.BuiltinFunctionType, types.MethodType, types.BuiltinMethodType))
 
-    def is_callback_in_event(self, event_name : str, callback: callable):
+    def is_callback_in_event(self, event_name: str, callback: callable):
         return callback in self.__events[event_name]
 
-    def bind(self, event_name: str, callback: callable) -> bool:
+    def link(self, callback: callable, event_name: str) -> bool:
         """Bind a callback to an event."""
 
         if not self.is_callable(callback):
@@ -87,30 +90,30 @@ class EventHandler:
 
         if not self.is_event_registered(event_name):
             raise EventHandler.Exceptions.EventNotAllowedError(
-                f'Can not bind event {event_name}, not registered. Registered events are:'
-                f' {", ".join(self.__events.keys())}. Please register event {event_name} before bind callbacks.')
+                f'Can not link event {event_name}, not registered. Registered events are:'
+                f' {", ".join(self.__events.keys())}. Please register event {event_name} before link callbacks.')
 
         if callback not in self.__events[event_name]:
             self.__events[event_name].append(callback)
             return True
 
-        print(f'Can not bind callback {str(callback.__name__)}, already registered in '
+        print(f'Can not link callback {str(callback.__name__)}, already registered in '
               f'{event_name} event.', file=self.stream_output) if self.verbose else None
         return False
 
-    def unbind(self, event_name: str, callback: callable) -> bool:
+    def unlink(self, callback: callable, event_name: str) -> bool:
         """Unbind a callback from an event."""
         if not self.is_event_registered(event_name):
-            print(f'Can not unbind event {event_name}, not registered. Registered events '
+            print(f'Can not unlink event {event_name}, not registered. Registered events '
                   f'are: {", ".join(self.__events.keys())}. '
-                  f'Please register event {event_name} before unbind callbacks.', file=self.stream_output)
+                  f'Please register event {event_name} before unlink callbacks.', file=self.stream_output)
             return False
 
         if callback in self.__events[event_name]:
             self.__events[event_name].remove(callback)
             return True
 
-        print(f'Can not unbind callback {str(callback.__name__)}, is not registered in '
+        print(f'Can not unlink callback {str(callback.__name__)}, is not registered in '
               f'{event_name} event.', file=self.stream_output) if self.verbose else None
 
         return False
@@ -126,7 +129,8 @@ class EventHandler:
                     raise e
                 else:
                     if self.verbose:
-                        print(f'WARNING: {str(callback.__name__)} produces an exception error.', file=self.stream_output)
+                        print(f'WARNING: {str(callback.__name__)} produces an exception error.',
+                              file=self.stream_output)
                         print('Arguments', args, file=self.stream_output)
                         print(e, file=self.stream_output)
                     all_ok = False
@@ -138,9 +142,9 @@ class EventHandler:
         """Return a string representation"""
 
         event_related = \
-            [f"{event}=[{', '.join([callback.__name__ for callback in self.__events[event]])}]" for event in self.__events]
+            [f"{event}=[{', '.join([callback.__name__ for callback in self.__events[event]])}]" for event in
+             self.__events]
         mem_address = str(hex(id(self)))
         return f'<class {self.__class__.__name__} at ' \
             f'{mem_address}: events=({event_related}), verbose={self.verbose}, ' \
             f'tolerate_exceptions={self.tolerate_exceptions}>'
-
