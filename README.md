@@ -5,8 +5,8 @@
 ### Build Status:
 [![Build Status](https://travis-ci.org/davidvicenteranz/eventhandler.svg?branch=master)](https://travis-ci.org/davidvicenteranz/eventhandler) 
 [![Coverage Status](https://coveralls.io/repos/github/davidvicenteranz/eventhandler/badge.svg)](https://coveralls.io/github/davidvicenteranz/eventhandler) 
-[![PyPI version](https://badge.fury.io/py/eventhandler.svg)](https://badge.fury.io/py/eventhandler) 
-[![Python package and publish](https://github.com/davidvicenteranz/eventhandler/workflows/Python%20package%20and%20publish/badge.svg?branch=master)](https://pypi.org/project/eventhandler/)  
+[![PyPI version](https://badge.fury.io/py/eventhandler.svg)](https://pypi.org/project/eventhandler/) 
+[![Python package and publish](https://github.com/davidvicenteranz/eventhandler/workflows/Python%20package%20and%20publish/badge.svg?branch=master)](https://github.com/davidvicenteranz/eventhandler/blob/master/.github/workflows/python-package.yml)  
 
 **PyPI:** [Package Information](https://pypi.python.org/pypi/eventhandler)
 
@@ -18,6 +18,7 @@ $ pip install eventhandler
 
 ## Usage or how to implement it
 Lets see a simple example of a chat room controlled by a bot using event calls.
+
 ```python
 from eventhandler import EventHandler
 
