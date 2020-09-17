@@ -1,6 +1,6 @@
 # eventhandler
 
-##### Is a simple and effective event handler class, based in callbacks for python 3
+##### Is a universal, simple and effective event handler class, based in callbacks for python 3
 
 ### Build Status:
 [![Build Status](https://travis-ci.org/davidvicenteranz/eventhandler.svg?branch=master)](https://travis-ci.org/davidvicenteranz/eventhandler) 
@@ -52,7 +52,7 @@ class ChatRoom:
     # This calbback will be called when onNewUser event happens
     def __on_newuser_join(self, user):
         """Shout in the output telling new user has joined chat room, when onNewuser event happens."""
-        print(f'** ChatRoom info ** user {user} has joined the chat ** {len(self.user_list())} user/s **')
+        print(f'\n** ChatRoom info ** user {user} has joined the chat ** {len(self.user_list())} user/s **\n')
 
     # This callback will be called when onMessage event happens
     def __on_message(self, user, msg):
@@ -103,14 +103,11 @@ class ChatBot:
 
         # check if the recibed message is answerable and reply if possible
         if msg == f'Hey {self.name}, are there anyone here?':
-            if len(self.chatroom.user_list()) < 1:
+            if len(self.chatroom.user_list()) == 1:
                 self.chatroom.say(self.name, f'Nope {user}. Just you and me.')
-            elif len(self.chatroom.user_list()) == 2:
-                self.chatroom.say(self.name, f'Yes {user}. '
-                f'there are {len(self.chatroom.user_list()) - 1} non bots users in the room, you, and me.')
             else:
                 self.chatroom.say(self.name, f'Yes {user}. '
-                f'there are {len(self.chatroom.user_list()) - 2} non bots users in the room, you, and me.')
+                f'there are {len(self.chatroom.user_list()) - 1} non bots users in the room, you, and me.')
         return
 
 
@@ -122,6 +119,10 @@ if __name__ == '__main__':
     # Initilize ChatBot class with the ChatRoom instance as param to let subscribe it to the chat events.
     bot = ChatBot(chat)
 
+    print("Chatroom's EventHandler object representation...")
+    print(f'{chat.event_handler}\n') # You can watch all events and their each one list of callbacks printing the object
+
+
     # Now the chat simulation. The first user interaction will send a message onNewuser event will be fired and
     # managed by the bot. All messages (onMessage event) will be reached by the bot.
     chat.say('sergio', 'Hello World!')
@@ -131,26 +132,35 @@ if __name__ == '__main__':
     chat.say('sergio', 'Hi david!')
     chat.say('kate')
     chat.say('kate', 'Hey bot, are there anyone here?')
+
 ```
 **The avobe code must produce and output this:**
 ```text
+Chatroom's EventHandler object representation...
+<class EventHandler at 0x10da97760: onNewuser:[__on_newuser_join, saludate_new_user], onMessage:[__on_message, read_user_message], verbose=False, tolerate_exceptions=False>
+
+
 ** ChatRoom info ** user sergio has joined the chat ** 1 user/s **
+
 bot says:	 Hello sergio, welcome to the chat room.
 sergio says:	 Hello World!
 sergio says:	 Hey bot, are there anyone here?
-bot says:	 Yes sergio. there are -1 non bots users in the room, you, and me.
+bot says:	 Nope sergio. Just you and me.
+
 ** ChatRoom info ** user david has joined the chat ** 2 user/s **
+
 bot says:	 Hello david, welcome to the chat room.
 david says:	 Hello everybody!
 david says:	 Hey bot, are there anyone here?
 bot says:	 Yes david. there are 1 non bots users in the room, you, and me.
 sergio says:	 Hi david!
+
 ** ChatRoom info ** user kate has joined the chat ** 3 user/s **
+
 bot says:	 Hello kate, welcome to the chat room.
 kate says:	 Hey bot, are there anyone here?
-bot says:	 Yes kate. there are 1 non bots users in the room, you, and me.
+bot says:	 Yes kate. there are 2 non bots users in the room, you, and me.
 ```
-
-Thanks for watching.
-
+  
+### Thanks for watching...
 Written, tested and packaged with love by [**David Vicente-Ranz**](https://davidvicenteranz.appspot.com/)

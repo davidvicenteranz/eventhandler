@@ -1,21 +1,43 @@
 import sys
 import types
 
-__version__ = '1.1.27'
+__version__ = '1.2.0'
 __author__ = 'David Vicente Ranz'
 
 
 class EventHandler:
-    """Event manager, link, unlink and fire events."""
+    """Universal, simple and effective syncronous event handler class, based in callbacks.
+
+    Use as any classic event handler based in callbacks.
+
+    eh = EventHandler('MyCoolEvent')
+    eh.link(callback, 'MyCoolEvent')
+    eh.fite('MyCoolEvent')
+
+    Attributes:
+        verbose (bool): Set True will output some messages, False will be silent.
+        stream_output (IoStream): Set the stream to output messages.
+        tolerate_exceptions (bool): Set True to ignore callbacks exceptions, False to raises it.
+    """
 
     class Exceptions:
-        """Custom error classes."""
+        """Custom error classes definition."""
 
         class EventNotAllowedError(Exception):
+            """Will raise when tries to link a callback to unexistent event."""
             pass
 
     def __init__(self, *event_names, verbose=False, stream_output=sys.stdout, tolerate_callbacks_exceptions=False):
-        """EventHandler initiazition recibes a list of allowed event names as arguments."""
+        """EventHandler initiazition recibes a list of allowed event names as arguments.
+
+        Args:
+            *event_names (str): Events names.
+            verbose (bool): Set True to output warning messages.
+            stream_output (IoStream): Set to send the output to specfic IO Stream object.
+            tolerate_callbacks_exceptions (bool):
+                False will raise any callback exception, stopping the execution.
+                True will ignore any callbacks exceptions.
+        """
         self.__events = {}
         self.verbose = verbose
         self.tolerate_exceptions = tolerate_callbacks_exceptions
@@ -28,11 +50,11 @@ class EventHandler:
         print(f'{self.__str__()} has been init.', file=self.stream_output) if self.verbose else None
 
     @property
-    def events(self):
-        """Return events as readOnly."""
+    def events(self) -> dict:
+        """Return events as dict."""
         return self.__events
 
-    def clear_events(self):
+    def clear_events(self) -> bool:
         """Clear all events."""
         self.__events = {}
         return True
@@ -48,11 +70,19 @@ class EventHandler:
         return len(self.event_list)
 
     def is_event_registered(self, event_name: str) -> bool:
-        """Return if an event is current registered."""
+        """Return if an event is current registered.
+
+        Args:
+            event_name (str): The event you want to consult.
+        """
         return event_name in self.__events
 
     def register_event(self, event_name: str) -> bool:
-        """Register an event name."""
+        """Register an event name.
+
+        Args:
+            event_name (str): Event name as string.
+        """
         # print('registering event', event_name, self.events)
         if self.is_event_registered(event_name):
             print(f'Omiting event {event_name} registration, already implemented',
@@ -63,7 +93,11 @@ class EventHandler:
         return True
 
     def unregister_event(self, event_name: str) -> bool:
-        """Unregister an event name."""
+        """Unregister an event name.
+
+        Args:
+            event_name (str): Remove an event from events dict.
+        """
         if event_name in self.__events:
             del self.__events[event_name]
             return True
@@ -72,16 +106,31 @@ class EventHandler:
         return False
 
     @staticmethod
-    def is_callable(func: callable) -> bool:
-        """Return true if func is a callable variable."""
+    def is_callable(func: any) -> bool:
+        """Return true if func is a callable variable.
+
+        Args:
+            func (callable): Object to validates as a callable.
+        """
         return isinstance(func,
                           (types.FunctionType, types.BuiltinFunctionType, types.MethodType, types.BuiltinMethodType))
 
-    def is_callback_in_event(self, event_name: str, callback: callable):
+    def is_callback_in_event(self, event_name: str, callback: callable) -> bool:
+        """Return if a given callback is already registered on the events dict.
+
+        Args:
+            event_name (str): The event name to look up for the callback inside.
+            callback (callable): The callback function to check.
+        """
         return callback in self.__events[event_name]
 
     def link(self, callback: callable, event_name: str) -> bool:
-        """Bind a callback to an event."""
+        """Link a callback to be executed on fired event..
+
+        Args:
+            callback (callable): function to link.
+            event_name (str): The event that will trigger the callback execution.
+        """
 
         if not self.is_callable(callback):
             print(f'Callback not registered. Type {type(callback)} '
@@ -102,7 +151,12 @@ class EventHandler:
         return False
 
     def unlink(self, callback: callable, event_name: str) -> bool:
-        """Unbind a callback from an event."""
+        """Unlink a callback execution fro especific event.
+
+        Args:
+            callback (callable): function to link.
+            event_name (str): The event that will trigger the callback execution.
+        """
         if not self.is_event_registered(event_name):
             print(f'Can not unlink event {event_name}, not registered. Registered events '
                   f'are: {", ".join(self.__events.keys())}. '
@@ -119,7 +173,13 @@ class EventHandler:
         return False
 
     def fire(self, event_name: str, *args, **kwargs) -> bool:
-        """Fire an event callbacks and return True only if all callbacks was successfully."""
+        """Triggers all callbacks executions linked to given event.
+
+        Args:
+            event_name (str): Event to trigger.
+            *args: Arguments to be passed to callback functions execution.
+            *kwargs: Keyword arguments to be passed to callback functions execution.
+        """
         all_ok = True
         for callback in self.__events[event_name]:
             try:
@@ -138,13 +198,19 @@ class EventHandler:
 
         return all_ok
 
-    def __str__(self):
-        """Return a string representation"""
+    def __str__(self) -> str:
+        """Return a string representation."""
+
+        mem_address = str(hex(id(self)))
 
         event_related = \
-            [f"{event}=[{', '.join([callback.__name__ for callback in self.__events[event]])}]" for event in
+            [f"{event}:[{', '.join([callback.__name__ for callback in self.__events[event]])}]" for event in
              self.__events]
-        mem_address = str(hex(id(self)))
+
         return f'<class {self.__class__.__name__} at ' \
-            f'{mem_address}: events=({event_related}), verbose={self.verbose}, ' \
+            f'{mem_address}: {", ".join(event_related)}, verbose={self.verbose}, ' \
             f'tolerate_exceptions={self.tolerate_exceptions}>'
+
+    def __repr__(self) -> str:
+        """Return python object representation."""
+        return self.__str__()
