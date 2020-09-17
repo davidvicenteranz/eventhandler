@@ -28,7 +28,7 @@ class ChatRoom:
     # This calbback will be called when onNewUser event happens
     def __on_newuser_join(self, user):
         """Shout in the output telling new user has joined chat room, when onNewuser event happens."""
-        print(f'** ChatRoom info ** user {user} has joined the chat ** {len(self.user_list())} user/s **')
+        print(f'\n** ChatRoom info ** user {user} has joined the chat ** {len(self.user_list())} user/s **\n')
 
     # This callback will be called when onMessage event happens
     def __on_message(self, user, msg):
@@ -79,14 +79,11 @@ class ChatBot:
 
         # check if the recibed message is answerable and reply if possible
         if msg == f'Hey {self.name}, are there anyone here?':
-            if len(self.chatroom.user_list()) < 1:
+            if len(self.chatroom.user_list()) == 1:
                 self.chatroom.say(self.name, f'Nope {user}. Just you and me.')
-            elif len(self.chatroom.user_list()) == 2:
-                self.chatroom.say(self.name, f'Yes {user}. '
-                f'there are {len(self.chatroom.user_list()) - 1} non bots users in the room, you, and me.')
             else:
                 self.chatroom.say(self.name, f'Yes {user}. '
-                f'there are {len(self.chatroom.user_list()) - 2} non bots users in the room, you, and me.')
+                f'there are {len(self.chatroom.user_list()) - 1} non bots users in the room, you, and me.')
         return
 
 
@@ -97,6 +94,10 @@ if __name__ == '__main__':
 
     # Initilize ChatBot class with the ChatRoom instance as param to let subscribe it to the chat events.
     bot = ChatBot(chat)
+
+    print("Chatroom's EventHandler object representation...")
+    print(f'{chat.event_handler}\n') # You can watch all events and their each one list of callbacks printing the object
+
 
     # Now the chat simulation. The first user interaction will send a message onNewuser event will be fired and
     # managed by the bot. All messages (onMessage event) will be reached by the bot.
